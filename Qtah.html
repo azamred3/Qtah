@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl" data-theme="dark">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content" />
 <meta name="theme-color" content="#08080c" />
 <meta name="color-scheme" content="dark" />
 <title>قطة الاستراحه</title>
@@ -76,7 +76,7 @@
   <div class="sheet-head">
     <button class="sheet-cancel" data-close>إلغاء</button>
     <h2 id="expSheetTitle">قطة جديدة</h2>
-    <button class="sheet-save" id="expenseSave">حفظ</button>
+    <button class="sheet-save" style="visibility:hidden" tabindex="-1" aria-hidden="true">حفظ</button>
   </div>
   <div class="sheet-body">
     <div class="field"><span>نوعها</span><div class="category-picker" id="expCategory"></div></div>
@@ -128,6 +128,12 @@
         <button type="button" data-day="2">قبل يومين</button>
       </div>
     </div>
+  </div>
+  <div class="sheet-footer">
+    <button class="sheet-save-bottom" id="expenseSave">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      <span>حفظ القطة</span>
+    </button>
   </div>
 </div>
 
@@ -187,7 +193,7 @@
   <div class="sheet-body" id="userBody"></div>
 </div>
 
-<!-- ===== ONBOARDING OVERLAY ===== -->
+<!-- ONBOARDING OVERLAY -->
 <div class="onboarding" id="onboarding" hidden>
   <div class="ob-bg">
     <div class="ob-orb ob-orb-1"></div>
