@@ -13,11 +13,11 @@
             '<div class="ob-sparkle" style="--i:1">✨</div>' +
             '<div class="ob-sparkle" style="--i:2">✨</div>' +
             '<div class="ob-sparkle" style="--i:3">✨</div>' +
-            '<div class="ob-mascot">🐱</div>' +
+            '<div class="ob-mascot">🪙</div>' +
           '</div>' +
         '</div>' +
         '<h2 class="ob-title">هلا بك في قطة!</h2>' +
-        '<p class="ob-desc">أسهل طريقة لتقسيم مصاريف الاستراحة بينك وبين ربّعك</p>';
+        '<p class="ob-desc">أسهل طريقة لتقسيم مصاريف الاستراحة بينك وبين اخوياك</p>';
       }
     },
     {
@@ -31,7 +31,7 @@
             '<div class="ob-avatar" style="--i:3; background:#34d39925; color:#34d399">🎸</div>' +
           '</div>' +
         '</div>' +
-        '<h2 class="ob-title">ضف ربّعك</h2>' +
+        '<h2 class="ob-title">ضف اخوياك</h2>' +
         '<p class="ob-desc">ضف أعضاء الاستراحة مرة وحدة — واستخدمهم في كل قطة</p>';
       }
     },
