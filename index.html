@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#08080c" />
+<meta name="color-scheme" content="dark" />
+<title>الدخول — قطة الاستراحه</title>
+<link rel="stylesheet" href="login.css" />
+</head>
+<body>
+
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<div class="login-page">
+  <div class="login-container">
+
+    <div class="split-hero" aria-hidden="true">
+      <div class="sh-bill">100<span>ر.س</span></div>
+      <div class="sh-part-wrap" style="--x:-65px;--y:-45px">
+        <div class="sh-part" style="animation-delay:0s">25</div>
+      </div>
+      <div class="sh-part-wrap" style="--x:65px;--y:-45px">
+        <div class="sh-part" style="animation-delay:0.15s">25</div>
+      </div>
+      <div class="sh-part-wrap" style="--x:-65px;--y:45px">
+        <div class="sh-part" style="animation-delay:0.3s">25</div>
+      </div>
+      <div class="sh-part-wrap" style="--x:65px;--y:45px">
+        <div class="sh-part" style="animation-delay:0.45s">25</div>
+      </div>
+      <div class="sh-label">قطة = قسمة</div>
+    </div>
+
+    <header class="brand">
+      <h1>قطة الاستراحه</h1>
+      <p>اقسم مصاريف الاستراحه بين ربّعك</p>
+    </header>
+
+    <div class="auth-tabs" role="tablist">
+      <button type="button" class="auth-tab active" data-tab="login">دخول</button>
+      <button type="button" class="auth-tab" data-tab="signup">حساب جديد</button>
+    </div>
+
+    <form id="loginForm" class="auth-form active" novalidate autocomplete="on">
+      <div class="field">
+        <label for="loginUsername">اسمك (بالإنجليزي)</label>
+        <div class="input-wrap">
+          <span class="input-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+          <input type="text" id="loginUsername" dir="ltr" placeholder="username" autocomplete="username" spellcheck="false" autocapitalize="none" />
+        </div>
+        <div class="field-error" id="loginUsernameError"></div>
+      </div>
+
+      <div class="field">
+        <label for="loginPassword">الباسورد</label>
+        <div class="input-wrap">
+          <span class="input-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </span>
+          <input type="password" id="loginPassword" dir="ltr" placeholder="••••••••" autocomplete="current-password" />
+          <button type="button" class="toggle-password" data-for="loginPassword" aria-label="إظهار الباسورد">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="field-error" id="loginPasswordError"></div>
+      </div>
+
+      <div class="row-between">
+        <label class="checkbox-wrap">
+          <input type="checkbox" id="rememberMe" />
+          <span class="checkbox-box"></span>
+          <span>ذكرني</span>
+        </label>
+        <a href="#" class="link" id="forgotLink">نسيت الباسورد؟</a>
+      </div>
+
+      <button type="submit" class="btn-primary" id="loginSubmitBtn">
+        <span class="btn-text">دخول</span>
+        <span class="btn-spinner" hidden></span>
+      </button>
+
+      <p class="switch-hint">
+        ما عندك حساب؟ <a href="#" class="link" data-switch="signup">سوّ لك حساب</a>
+      </p>
+    </form>
+
+    <form id="signupForm" class="auth-form" novalidate autocomplete="on">
+      <div class="field">
+        <label for="signupUsername">اسمك (بالإنجليزي بس)</label>
+        <div class="input-wrap">
+          <span class="input-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+          <input type="text" id="signupUsername" dir="ltr" placeholder="username" autocomplete="username" spellcheck="false" autocapitalize="none" maxlength="20" />
+        </div>
+        <div class="field-hint">3-20 حرف إنجليزي، أرقام، أو _ بس</div>
+        <div class="field-error" id="signupUsernameError"></div>
+      </div>
+
+      <div class="field">
+        <label for="signupPassword">الباسورد</label>
+        <div class="input-wrap">
+          <span class="input-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </span>
+          <input type="password" id="signupPassword" dir="ltr" placeholder="••••••••" autocomplete="new-password" />
+          <button type="button" class="toggle-password" data-for="signupPassword" aria-label="إظهار الباسورد">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="password-strength" id="signupStrength">
+          <div class="strength-bar"><span></span></div>
+          <div class="strength-text"></div>
+        </div>
+        <div class="field-error" id="signupPasswordError"></div>
+      </div>
+
+      <div class="field">
+        <label for="signupConfirm">أكد الباسورد</label>
+        <div class="input-wrap">
+          <span class="input-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </span>
+          <input type="password" id="signupConfirm" dir="ltr" placeholder="••••••••" autocomplete="new-password" />
+          <button type="button" class="toggle-password" data-for="signupConfirm" aria-label="إظهار الباسورد">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <div class="field-error" id="signupConfirmError"></div>
+      </div>
+
+      <button type="submit" class="btn-primary" id="signupSubmitBtn">
+        <span class="btn-text">سوّ الحساب</span>
+        <span class="btn-spinner" hidden></span>
+      </button>
+
+      <p class="switch-hint">
+        عندك حساب؟ <a href="#" class="link" data-switch="login">دخّل</a>
+      </p>
+    </form>
+  </div>
+
+  <footer class="login-footer">
+    <p>جميع الحقوق محفوظة © قطة الاستراحه</p>
+  </footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-client.js"></script>
+<script src="login.js"></script>
+</body>
+</html>

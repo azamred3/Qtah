@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#08080c" />
+<meta name="color-scheme" content="dark" />
+<title>قطة الاستراحه</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="onboarding.css" />
+</head>
+<body>
+
+<div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
+
+<div class="app">
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-logo">ق</div>
+      <div class="brand-text">
+        <h1>قطة الاستراحه</h1>
+        <p>اقسم مصاريف الاستراحه</p>
+      </div>
+    </div>
+    <button class="user-btn" id="userBtn" aria-label="حسابي">
+      <span class="user-avatar" id="userAvatar">👤</span>
+    </button>
+  </header>
+
+  <section class="summary">
+    <div class="summary-main">
+      <span class="summary-label">مجموع المصاريف</span>
+      <span class="summary-amount" id="sumTotal">0 ر.س</span>
+    </div>
+    <div class="summary-grid">
+      <div class="summary-item"><b id="sumMembers">0</b><span>شباب</span></div>
+      <div class="summary-item"><b id="sumExpenses">0</b><span>قطات</span></div>
+      <div class="summary-item"><b id="sumPending">0</b><span>ما تسدد</span></div>
+    </div>
+  </section>
+
+  <nav class="segmented" id="tabs">
+    <button class="seg active" data-tab="members">الشباب</button>
+    <button class="seg" data-tab="expenses">القطات</button>
+    <button class="seg" data-tab="settle">الحساب</button>
+  </nav>
+
+  <main class="content">
+    <section class="tab-panel active" id="panel-members"></section>
+    <section class="tab-panel" id="panel-expenses"></section>
+    <section class="tab-panel" id="panel-settle"></section>
+  </main>
+</div>
+
+<button class="fab" id="fabAdd" aria-label="إضافة"><span>+</span></button>
+
+<div class="backdrop" id="backdrop"></div>
+
+<!-- نافذة العضو -->
+<div class="sheet" id="sheet-member">
+  <div class="sheet-handle"></div>
+  <div class="sheet-head">
+    <button class="sheet-cancel" data-close>إلغاء</button>
+    <h2 id="memberSheetTitle">واحد جديد</h2>
+    <button class="sheet-save" id="memberSave">حفظ</button>
+  </div>
+  <div class="sheet-body">
+    <label class="field"><span>الاسم</span><input type="text" id="memberName" placeholder="مثال: عبدالله" autocomplete="off" /></label>
+    <div class="field"><span>الشكل</span><div class="emoji-picker" id="emojiPicker"></div></div>
+  </div>
+</div>
+
+<!-- نافذة القطة -->
+<div class="sheet" id="sheet-expense">
+  <div class="sheet-handle"></div>
+  <div class="sheet-head">
+    <button class="sheet-cancel" data-close>إلغاء</button>
+    <h2 id="expSheetTitle">قطة جديدة</h2>
+    <button class="sheet-save" id="expenseSave">حفظ</button>
+  </div>
+  <div class="sheet-body">
+    <div class="field"><span>نوعها</span><div class="category-picker" id="expCategory"></div></div>
+
+    <label class="field"><span>الوصف</span><input type="text" id="expTitle" placeholder="عشاء، قهوة، بقالة…" autocomplete="off" /></label>
+
+    <div class="field">
+      <span>المبلغ (ر.س)</span>
+      <input type="text" id="expAmount" inputmode="decimal" placeholder="0.00" autocomplete="off" />
+      <div class="quick-amounts" id="quickAmounts">
+        <button type="button" data-amt="10">10</button>
+        <button type="button" data-amt="20">20</button>
+        <button type="button" data-amt="50">50</button>
+        <button type="button" data-amt="100">100</button>
+        <button type="button" data-amt="200">200</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <span>مين دفع؟</span>
+      <div class="payer-chips" id="expPayerChips"></div>
+      <input type="hidden" id="expPayer" />
+    </div>
+
+    <div class="field">
+      <span>طريقة القسمة</span>
+      <div class="segmented small" id="splitMode">
+        <button class="seg active" data-mode="equal" type="button">بالسوية</button>
+        <button class="seg" data-mode="custom" type="button">مخصص</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <span>اللي معه</span>
+      <div class="check-list" id="expParticipants"></div>
+      <div class="row-between">
+        <button class="link-btn" id="selectAllBtn" type="button">الكل / ولا أحد</button>
+        <button class="link-btn" id="distributeBtn" type="button" hidden>وزّع بالسوية</button>
+      </div>
+      <div class="hint" id="shareHint" hidden></div>
+    </div>
+
+    <div class="field">
+      <span>التاريخ</span>
+      <input type="date" id="expDate" />
+      <div class="quick-dates">
+        <button type="button" data-day="0">اليوم</button>
+        <button type="button" data-day="1">أمس</button>
+        <button type="button" data-day="2">قبل يومين</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- نافذة السداد -->
+<div class="sheet" id="sheet-payment">
+  <div class="sheet-handle"></div>
+  <div class="sheet-head">
+    <button class="sheet-cancel" data-close>إلغاء</button>
+    <h2>سداد مبلغ</h2>
+    <button class="sheet-save" id="paymentSave">حفظ</button>
+  </div>
+  <div class="sheet-body">
+    <label class="field"><span>مين يدفع؟</span><select id="payFrom"></select></label>
+    <label class="field"><span>لمين؟</span><select id="payTo"></select></label>
+    <label class="field"><span>المبلغ (ر.س)</span><input type="text" id="payAmount" inputmode="decimal" placeholder="0.00" /></label>
+    <label class="field"><span>ملاحظة (اختياري)</span><input type="text" id="payNote" placeholder="تحويل، كاش…" autocomplete="off" /></label>
+  </div>
+</div>
+
+<!-- نافذة الدين -->
+<div class="sheet" id="sheet-debt">
+  <div class="sheet-handle"></div>
+  <div class="sheet-head">
+    <button class="sheet-cancel" data-close>إلغاء</button>
+    <h2>سجل دين</h2>
+    <button class="sheet-save" id="debtSave">حفظ</button>
+  </div>
+  <div class="sheet-body">
+    <label class="field"><span>اللي عليه الدين</span><select id="debtDebtor"></select></label>
+    <label class="field"><span>اللي له الدين</span><select id="debtCreditor"></select></label>
+    <label class="field"><span>المبلغ (ر.س)</span><input type="text" id="debtAmount" inputmode="decimal" placeholder="0.00" /></label>
+    <label class="field"><span>السبب</span><input type="text" id="debtNote" placeholder="سلف، دين قديم…" autocomplete="off" /></label>
+    <label class="field"><span>التاريخ</span><input type="date" id="debtDate" /></label>
+    <div class="hint">💡 الدين يُحسب على اللي عليه، ويُضاف لللي له. لما يسدد، سجّل "سداد" وينغلق.</div>
+  </div>
+</div>
+
+<!-- نافذة التفاصيل -->
+<div class="sheet" id="sheet-info">
+  <div class="sheet-handle"></div>
+  <div class="sheet-head">
+    <button class="sheet-cancel" data-close style="visibility:hidden">إلغاء</button>
+    <h2 id="infoTitle">تفاصيل</h2>
+    <button class="sheet-save" data-close>تم</button>
+  </div>
+  <div class="sheet-body" id="infoBody"></div>
+</div>
+
+<!-- نافذة الحساب -->
+<div class="sheet" id="sheet-user">
+  <div class="sheet-handle"></div>
+  <div class="sheet-head">
+    <button class="sheet-cancel" data-close style="visibility:hidden">إلغاء</button>
+    <h2>حسابي</h2>
+    <button class="sheet-save" data-close>تم</button>
+  </div>
+  <div class="sheet-body" id="userBody"></div>
+</div>
+
+<!-- ===== ONBOARDING OVERLAY ===== -->
+<div class="onboarding" id="onboarding" hidden>
+  <div class="ob-bg">
+    <div class="ob-orb ob-orb-1"></div>
+    <div class="ob-orb ob-orb-2"></div>
+    <div class="ob-orb ob-orb-3"></div>
+  </div>
+  <div class="ob-progress"><div class="ob-progress-fill" id="obProgress"></div></div>
+  <div class="ob-slides" id="obSlides"></div>
+  <div class="ob-controls">
+    <button class="ob-skip" id="obSkip">تخطي</button>
+    <div class="ob-dots" id="obDots"></div>
+    <button class="ob-next" id="obNext">التالي</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-client.js"></script>
+<script src="js.js"></script>
+<script src="onboarding.js"></script>
+</body>
+</html>
