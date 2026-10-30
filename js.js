@@ -5,18 +5,9 @@
   const EMOJIS = ['👤','😎','🧔','👨','👱','🧑','👦','👴','⚪','🎮','🎯','🎸','🎨','📚','🚗','💼','🍔','☕','🌙','⭐','🔥','💎','🎥','📱'];
   const COLORS = ['#818cf8','#c084fc','#f472b6','#34d399','#fbbf24','#60a5fa','#f87171','#a78bfa','#fb923c','#22d3ee'];
   const CATEGORIES = [
-    { emoji: '🧾', label: 'أخرى' },
-    { emoji: '🍔', label: 'طعام' },
-    { emoji: '☕', label: 'قهوة' },
-    { emoji: '🛒', label: 'بقالة' },
-    { emoji: '⛽', label: 'بنزين' },
-    { emoji: '🚗', label: 'مواصلات' },
-    { emoji: '🏠', label: 'سكن' },
-    { emoji: '🎮', label: 'ترفيه' },
-    { emoji: '💊', label: 'صحة' },
-    { emoji: '📱', label: 'اتصالات' },
-    { emoji: '🎁', label: 'هدايا' },
-    { emoji: '✈️', label: 'سفر' }
+    { emoji: '🧾', label: 'أخرى' }, { emoji: '🍔', label: 'طعام' }, { emoji: '☕', label: 'قهوة' }, { emoji: '🛒', label: 'بقالة' },
+    { emoji: '⛽', label: 'بنزين' }, { emoji: '🚗', label: 'مواصلات' }, { emoji: '🏠', label: 'سكن' }, { emoji: '🎮', label: 'ترفيه' },
+    { emoji: '💊', label: 'صحة' }, { emoji: '📱', label: 'اتصالات' }, { emoji: '🎁', label: 'هدايا' }, { emoji: '✈️', label: 'سفر' }
   ];
   const APPLE_LOGO_PATH = "M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z";
 
@@ -50,25 +41,14 @@
     if (document.querySelector('[data-fatal]')) return;
     const div = document.createElement('div');
     div.setAttribute('data-fatal', '1');
-    div.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#f87171;color:#fff;padding:14px;z-index:99999;font-family:sans-serif;font-size:13px;line-height:1.5;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.3);';
-    div.innerHTML = '⚠️ ' + escapeHtml(msg) + '<br><small style="opacity:0.85">افتح F12 → Console</small>';
+    div.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#f87171;color:#fff;padding:14px;z-index:99999;font-family:sans-serif;font-size:13px;line-height:1.5;text-align:center;';
+    div.innerHTML = '⚠️ ' + escapeHtml(msg);
     document.body.insertAdjacentHTML('afterbegin', div.outerHTML);
   }
 
   function signOutAndRedirect() {
-    console.log('🚪 تسجيل خروج');
-    try {
-      if (window.db && window.db.auth) {
-        window.db.auth.signOut({ scope: 'local' }).catch(function (e) { console.warn('signOut:', e); });
-      }
-    } catch (e) { console.warn('signOut sync:', e); }
-    try {
-      Object.keys(localStorage).forEach(function (k) {
-        if (k.indexOf('sb-') === 0 || k.toLowerCase().indexOf('supabase') !== -1 || k.toLowerCase().indexOf('auth-token') !== -1) {
-          localStorage.removeItem(k);
-        }
-      });
-    } catch (e) { console.warn('clear:', e); }
+    try { if (window.db && window.db.auth) { window.db.auth.signOut({ scope: 'local' }).catch(function () {}); } } catch (e) {}
+    try { Object.keys(localStorage).forEach(function (k) { if (k.indexOf('sb-') === 0 || k.toLowerCase().indexOf('supabase') !== -1 || k.toLowerCase().indexOf('auth-token') !== -1) localStorage.removeItem(k); }); } catch (e) {}
     window.location.replace('index.html?logged_out=1');
   }
 
@@ -83,7 +63,7 @@
     wrap.addEventListener('click', function (e) { if (e.target === wrap) remove(); });
   }
 
-  // ============ "من أنا؟" — مطابقة ذكية ============
+  // ============ "من أنا؟" ============
   function findMeAsMember() {
     if (!currentUser) return null;
     var names = [];
@@ -122,8 +102,8 @@
     wrap.innerHTML =
       '<div class="me-pick-dialog">' +
         '<div class="me-pick-head">' +
-          '<h3>⚡ من أنت؟</h3>' +
-          '<p>اختر اسمك من القائمة — راح نتذكرك بعد كذا</p>' +
+          '<h3>👋 عرّفنا عليك</h3>' +
+          '<p>اختر اسمك من القائمة — راح نتذكرك، وكل قطعة جديدة تكون <b>أنت اللي دفعتها</b> تلقائياً</p>' +
         '</div>' +
         '<div class="me-pick-list">' +
           state.members.map(function (m) {
@@ -146,7 +126,7 @@
         setMyMemberId(id);
         remove();
         haptic(15);
-        toast('تم! صرنا نعرفك ⚡', 'success');
+        toast('تمام! كل قطعة جديدة راح تكون أنت دافعها ⚡', 'success');
         onPicked(id);
       };
     });
@@ -193,31 +173,23 @@
   function totalReceivable() { const bal = computeBalances(); let sum = 0; Object.values(bal).forEach(v => { if (v > 0) sum += v; }); return Math.round(sum * 100) / 100; }
 
   async function loadAllData() {
-    console.log('📥 جلب البيانات');
     if (!window.db) throw new Error('window.db غير موجود');
     const sessionRes = await window.db.auth.getSession();
     const session = sessionRes && sessionRes.data && sessionRes.data.session;
-    if (!session || !session.user) { console.warn('⚠️ ما فيه جلسة داخل loadAllData'); window.location.replace('index.html'); throw new Error('no session'); }
+    if (!session || !session.user) { window.location.replace('index.html'); throw new Error('no session'); }
     currentUser = session.user;
-    console.log('✅ المستخدم:', session.user.email);
 
     const membersRes = await window.db.from('qittat_members').select('*').order('created_at');
-    if (membersRes.error) { console.error('members:', membersRes.error); showFatalError('فشل تحميل الأعضاء: ' + membersRes.error.message); }
+    if (membersRes.error) showFatalError('فشل تحميل الأعضاء: ' + membersRes.error.message);
     state.members = membersRes.data || [];
 
     const expRes = await window.db.from('qittat_expenses').select('*').order('date', { ascending: false });
-    if (expRes.error) console.error('expenses:', expRes.error);
     state.expenses = expRes.data || [];
-
     const payRes = await window.db.from('qittat_payments').select('*').order('date', { ascending: false });
-    if (payRes.error) console.error('payments:', payRes.error);
     state.payments = payRes.data || [];
-
     const debtRes = await window.db.from('qittat_debts').select('*').order('date', { ascending: false });
-    if (debtRes.error) console.error('debts:', debtRes.error);
     state.debts = debtRes.data || [];
 
-    console.log('✅ البيانات:', state.members.length, 'أعضاء،', state.expenses.length, 'قطات');
     renderActivePanel(currentTab());
     renderSummary();
   }
@@ -250,8 +222,7 @@
     if (!panel) return;
     if (state.members.length === 0) {
       panel.innerHTML = '<div class="empty"><div class="empty-icon">👥</div><div class="empty-title">ما فيه أعضاء للحين</div><div class="empty-sub">ضف أول واحد عشان تبدأ</div><button class="empty-cta" id="emptyAddMember">+ ضف أول عضو</button></div>';
-      const btn = panel.querySelector('#emptyAddMember');
-      if (btn) btn.onclick = function () { openMemberSheet(); };
+      panel.querySelector('#emptyAddMember').onclick = function () { openMemberSheet(); };
       return;
     }
     const balances = computeBalances();
@@ -286,7 +257,7 @@
 
   async function deleteMember(id) {
     const res = await window.db.from('qittat_members').delete().eq('id', id);
-    if (res.error) { toast('فشل الحذف', 'error'); console.error(res.error); return; }
+    if (res.error) { toast('فشل الحذف', 'error'); return; }
     toast('انحذف', 'success'); haptic(20); await loadAllData();
   }
 
@@ -341,7 +312,7 @@
     const html = '<div style="text-align:center;padding:6px 0 12px"><div style="font-size:44px;margin-bottom:6px">' + (e.emoji || '🧾') + '</div><div style="font-size:20px;font-weight:800;margin-bottom:4px">' + escapeHtml(e.title) + '</div><div style="font-size:28px;font-weight:800;background:var(--accent-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent">' + money(e.amount) + '</div></div><div class="detail-list"><div class="detail-row"><span class="k">دفعها</span><span class="v">' + getMemberEmoji(e.payer_id) + ' ' + escapeHtml(getMemberName(e.payer_id)) + '</span></div><div class="detail-row"><span class="k">التاريخ</span><span class="v">' + fmtDate(e.date) + '</span></div></div><div class="info-section-title">اللي معه</div><div class="card-list">' + rowsHtml + '</div><div class="copy-block"><button class="copy-exp-btn" id="copyExpBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>انسخ القطة</span></button></div><div class="action-row"><button class="btn-secondary" id="editExpBtn">عدّل</button><button class="btn-danger" id="delExpBtn">احذف</button></div>';
     document.getElementById('infoTitle').textContent = 'تفاصيل القطة'; const body = document.getElementById('infoBody'); body.innerHTML = html; openSheet('sheet-info');
     body.querySelector('#copyExpBtn').onclick = function () { copyText(generateExpenseCopyText(e)); };
-    body.querySelectorAll('[data-pay]').forEach(btn => { btn.onclick = async function () { const mid = btn.dataset.pay; const p = participants.find(x => x.memberId === mid); if (!p) return; p.paid = true; p.paidAt = new Date().toISOString(); const upd = participants.map(x => x.memberId === mid ? p : x); const res = await window.db.from('qittat_expenses').update({ participants: upd }).eq('id', expId); if (res.error) { toast('فشل', 'error'); return; } haptic(15); toast('تم الدفع ✓', 'success'); await loadAllData(); openExpenseInfo(expId); }; });
+    body.querySelectorAll('[data-pay]').forEach(btn => { btn.onclick = async function () { const mid = btn.dataset.pay; const p = participants.find(x => x.memberId === mid); if (!p) return; p.paid = true; p.paidAt = new Date().toISOString(); const upd = participants.map(x => x.memberId === mid ? p : x); await window.db.from('qittat_expenses').update({ participants: upd }).eq('id', expId); haptic(15); toast('تم الدفع ✓', 'success'); await loadAllData(); openExpenseInfo(expId); }; });
     body.querySelectorAll('[data-unpay]').forEach(btn => { btn.onclick = async function () { const mid = btn.dataset.unpay; const p = participants.find(x => x.memberId === mid); if (!p) return; p.paid = false; delete p.paidAt; const upd = participants.map(x => x.memberId === mid ? p : x); await window.db.from('qittat_expenses').update({ participants: upd }).eq('id', expId); haptic(10); toast('تم التراجع'); await loadAllData(); openExpenseInfo(expId); }; });
     body.querySelector('#editExpBtn').onclick = function () { closeSheet('sheet-info'); openExpenseSheet(expId); };
     body.querySelector('#delExpBtn').onclick = function () { closeSheet('sheet-info'); confirmDialog('حذف القطة', 'تبي تحذف "' + e.title + '"؟', 'احذف', async function () { await window.db.from('qittat_expenses').delete().eq('id', expId); toast('انحذفت', 'success'); haptic(20); await loadAllData(); }); };
@@ -357,67 +328,52 @@
     editingExpenseId = expId || null;
     if (state.members.length === 0) { toast('ضف أعضاء أول', 'error'); return; }
     const titleEl = document.getElementById('expSheetTitle'), titleInput = document.getElementById('expTitle'), amountInput = document.getElementById('expAmount'), dateInput = document.getElementById('expDate'), participantsBox = document.getElementById('expParticipants'), hint = document.getElementById('shareHint'), distributeBtn = document.getElementById('distributeBtn'), catPicker = document.getElementById('expCategory'), payerChips = document.getElementById('expPayerChips');
+
     catPicker.innerHTML = CATEGORIES.map(c => '<button type="button" class="category-opt' + (c.emoji === selectedCategory ? ' active' : '') + '" data-cat="' + c.emoji + '">' + c.emoji + '</button>').join('');
     catPicker.querySelectorAll('[data-cat]').forEach(btn => { btn.onclick = function () { selectedCategory = btn.dataset.cat; catPicker.querySelectorAll('.category-opt').forEach(b => b.classList.toggle('active', b === btn)); }; });
 
-    // ============ شرائح الدافع — مع زر "أنا دفعت" ============
     function buildPayerChips(selectedId) {
       var meId = getMyMemberId();
       var html = '';
-
-      // زر "أنا دفعت" — دايماً أول واحد
       if (state.members.length > 0) {
         if (meId) {
-          // نعرف من هو — يختار مباشرة
+          var meM = getMember(meId);
           var meActive = meId === selectedId;
           html += '<button type="button" class="payer-chip payer-chip-me' + (meActive ? ' active' : '') + '" data-payer-me="' + meId + '">' +
-            '<div class="avatar" style="background:rgba(129,140,248,0.22);color:#a5b4fc">⚡</div>' +
-            '<div class="pc-name">أنا دفعت</div>' +
+            '<div class="avatar" style="background:rgba(129,140,248,0.25);color:#a5b4fc">⚡</div>' +
+            '<div class="pc-name">أنا (' + escapeHtml(meM ? meM.name : '') + ')</div>' +
             '</button>';
         } else {
-          // ما نعرفه — يفتح شاشة الاختيار
           html += '<button type="button" class="payer-chip payer-chip-me payer-chip-pick" data-payer-pick="1">' +
-            '<div class="avatar" style="background:rgba(129,140,248,0.22);color:#a5b4fc">⚡</div>' +
-            '<div class="pc-name">أنا دفعت</div>' +
+            '<div class="avatar" style="background:rgba(129,140,248,0.25);color:#a5b4fc">⚡</div>' +
+            '<div class="pc-name">أنا</div>' +
             '</button>';
         }
       }
-
-      // باقي الأعضاء
       html += state.members.map(function (m) {
+        var isMe = m.id === meId;
         return '<button type="button" class="payer-chip' + (m.id === selectedId ? ' active' : '') + '" data-payer="' + m.id + '">' +
           '<div class="avatar" style="background:' + m.color + '25;color:' + m.color + '">' + m.emoji + '</div>' +
-          '<div class="pc-name">' + escapeHtml(m.name) + '</div>' +
+          '<div class="pc-name">' + escapeHtml(m.name) + (isMe ? ' ★' : '') + '</div>' +
           '</button>';
       }).join('');
-
       payerChips.innerHTML = html;
-
-      // أحداث — أعضاء عاديين
       payerChips.querySelectorAll('[data-payer]').forEach(function (btn) {
         btn.onclick = function () {
           selectedPayerId = btn.dataset.payer;
           document.getElementById('expPayer').value = selectedPayerId;
-          payerChips.querySelectorAll('.payer-chip').forEach(function (b) {
-            b.classList.toggle('active', b === btn);
-          });
+          payerChips.querySelectorAll('.payer-chip').forEach(function (b) { b.classList.toggle('active', b === btn); });
         };
       });
-
-      // زر "أنا دفعت" (معروف)
       payerChips.querySelectorAll('[data-payer-me]').forEach(function (btn) {
         btn.onclick = function () {
           var id = btn.dataset.payerMe;
           selectedPayerId = id;
           document.getElementById('expPayer').value = id;
-          payerChips.querySelectorAll('.payer-chip').forEach(function (b) {
-            b.classList.toggle('active', b.getAttribute('data-payer') === id || b === btn);
-          });
+          payerChips.querySelectorAll('.payer-chip').forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-payer') === id || b === btn); });
           haptic(12);
         };
       });
-
-      // زر "أنا دفعت" (مجهول) — يفتح شاشة "من أنت؟"
       payerChips.querySelectorAll('[data-payer-pick]').forEach(function (btn) {
         btn.onclick = function () {
           pickMyMemberDialog(function (pickedId) {
@@ -527,14 +483,31 @@
         buildParticipants(map);
       }
     } else {
-      titleEl.textContent = 'قطة جديدة'; titleInput.value = ''; amountInput.value = ''; dateInput.value = todayISO();
-      selectedCategory = '🧾'; selectedPayerId = state.members[0].id;
+      titleEl.textContent = 'قطة جديدة';
+      titleInput.value = '';
+      amountInput.value = '';
+      dateInput.value = todayISO();
+      selectedCategory = '🧾';
+      var myId = getMyMemberId();
+      selectedPayerId = myId || (state.members[0] ? state.members[0].id : null);
       catPicker.querySelectorAll('.category-opt').forEach(b => b.classList.toggle('active', b.dataset.cat === '🧾'));
-      buildPayerChips(selectedPayerId); document.getElementById('expPayer').value = selectedPayerId;
-      splitMode = 'equal'; document.querySelectorAll('#splitMode .seg').forEach(b => b.classList.toggle('active', b.dataset.mode === 'equal'));
+      buildPayerChips(selectedPayerId);
+      if (selectedPayerId) document.getElementById('expPayer').value = selectedPayerId;
+      splitMode = 'equal';
+      document.querySelectorAll('#splitMode .seg').forEach(b => b.classList.toggle('active', b.dataset.mode === 'equal'));
       buildParticipants(null);
+      if (!myId) {
+        setTimeout(function () {
+          pickMyMemberDialog(function (pickedId) {
+            selectedPayerId = pickedId;
+            document.getElementById('expPayer').value = pickedId;
+            buildPayerChips(pickedId);
+          });
+        }, 400);
+      }
     }
-    updateHint(); openSheet('sheet-expense'); setTimeout(function () { titleInput.focus(); }, 300);
+    updateHint(); openSheet('sheet-expense');
+    setTimeout(function () { titleInput.focus(); }, 350);
   }
 
   async function saveExpense() {
@@ -555,11 +528,11 @@
       const oldExp = state.expenses.find(x => x.id === editingExpenseId);
       participants = participants.map(p => { if (oldExp) { const oldP = (oldExp.participants || []).find(op => op.memberId === p.memberId); if (oldP && oldP.paid && Math.abs(oldP.share - p.share) < 0.01) return { memberId: p.memberId, share: p.share, paid: true, paidAt: oldP.paidAt }; } return p; });
       const res = await window.db.from('qittat_expenses').update({ title, amount, payer_id: payerId, date, emoji: selectedCategory, participants }).eq('id', editingExpenseId);
-      if (res.error) { toast('فشل التعديل', 'error'); console.error(res.error); return; }
+      if (res.error) { toast('فشل التعديل', 'error'); return; }
       toast('انعدلت القطة', 'success');
     } else {
       const res = await window.db.from('qittat_expenses').insert([{ user_id: currentUser.id, title, emoji: selectedCategory, amount, payer_id: payerId, date, participants }]);
-      if (res.error) { toast('فشل الحفظ', 'error'); console.error(res.error); return; }
+      if (res.error) { toast('فشل الحفظ', 'error'); return; }
       toast('انضافت القطة', 'success');
     }
     haptic(20); closeSheet('sheet-expense'); editingExpenseId = null; await loadAllData();
@@ -572,7 +545,7 @@
     picker.querySelectorAll('[data-emoji]').forEach(btn => { btn.onclick = function () { selectedEmoji = btn.dataset.emoji; picker.querySelectorAll('.emoji-opt').forEach(b => b.classList.toggle('active', b === btn)); }; });
     if (memberId) { const m = getMember(memberId); if (m) { title.textContent = 'تعديل'; nameInput.value = m.name; selectedEmoji = m.emoji; picker.querySelectorAll('.emoji-opt').forEach(b => b.classList.toggle('active', b.dataset.emoji === selectedEmoji)); } nameInput.dataset.editId = memberId; }
     else { title.textContent = 'واحد جديد'; nameInput.value = ''; delete nameInput.dataset.editId; }
-    openSheet('sheet-member'); setTimeout(function () { nameInput.focus(); }, 300);
+    openSheet('sheet-member'); setTimeout(function () { nameInput.focus(); }, 350);
   }
 
   async function saveMember() {
@@ -580,7 +553,7 @@
     if (!name) { toast('اكتب اسمه', 'error'); nameInput.focus(); return; }
     const editId = nameInput.dataset.editId;
     if (editId) { const r = await window.db.from('qittat_members').update({ name: name, emoji: selectedEmoji }).eq('id', editId); if (r.error) { toast('فشل', 'error'); return; } toast('انعدل', 'success'); }
-    else { const r = await window.db.from('qittat_members').insert([{ user_id: currentUser.id, name: name, emoji: selectedEmoji, color: COLORS[state.members.length % COLORS.length] }]); if (r.error) { toast('فشل', 'error'); console.error(r.error); return; } toast('انضاف', 'success'); }
+    else { const r = await window.db.from('qittat_members').insert([{ user_id: currentUser.id, name: name, emoji: selectedEmoji, color: COLORS[state.members.length % COLORS.length] }]); if (r.error) { toast('فشل', 'error'); return; } toast('انضاف', 'success'); }
     haptic(15); closeSheet('sheet-member'); await loadAllData();
   }
 
@@ -589,7 +562,7 @@
     const opts = state.members.map(m => '<option value="' + m.id + '">' + m.emoji + ' ' + escapeHtml(m.name) + '</option>').join('');
     document.getElementById('payFrom').innerHTML = opts; document.getElementById('payTo').innerHTML = opts; document.getElementById('payTo').selectedIndex = 1;
     document.getElementById('payAmount').value = ''; document.getElementById('payNote').value = '';
-    openSheet('sheet-payment'); setTimeout(function () { document.getElementById('payAmount').focus(); }, 300);
+    openSheet('sheet-payment'); setTimeout(function () { document.getElementById('payAmount').focus(); }, 350);
   }
 
   async function savePayment() {
@@ -606,7 +579,7 @@
     const opts = state.members.map(m => '<option value="' + m.id + '">' + m.emoji + ' ' + escapeHtml(m.name) + '</option>').join('');
     document.getElementById('debtDebtor').innerHTML = opts; document.getElementById('debtCreditor').innerHTML = opts; document.getElementById('debtCreditor').selectedIndex = 1;
     document.getElementById('debtAmount').value = ''; document.getElementById('debtNote').value = ''; document.getElementById('debtDate').value = todayISO();
-    openSheet('sheet-debt'); setTimeout(function () { document.getElementById('debtAmount').focus(); }, 300);
+    openSheet('sheet-debt'); setTimeout(function () { document.getElementById('debtAmount').focus(); }, 350);
   }
 
   async function saveDebt() {
@@ -640,8 +613,28 @@
     const addDebt = panel.querySelector('#addDebtBtn'); if (addDebt) addDebt.onclick = function () { openDebtSheet(); };
   }
 
-  function openSheet(id) { const sheet = document.getElementById(id), backdrop = document.getElementById('backdrop'); if (!sheet || !backdrop) return; if (sheetStack.indexOf(id) === -1) sheetStack.push(id); backdrop.classList.add('show'); sheet.classList.add('open'); document.body.style.overflow = 'hidden'; haptic(8); }
-  function closeSheet(id) { const sheet = document.getElementById(id), backdrop = document.getElementById('backdrop'); if (!sheet) return; sheet.classList.remove('open'); sheetStack = sheetStack.filter(s => s !== id); if (sheetStack.length === 0 && backdrop) { backdrop.classList.remove('show'); document.body.style.overflow = ''; } }
+  // ============ Open/Close Sheet مع body-lock class ============
+  function openSheet(id) {
+    const sheet = document.getElementById(id), backdrop = document.getElementById('backdrop');
+    if (!sheet || !backdrop) return;
+    if (sheetStack.indexOf(id) === -1) sheetStack.push(id);
+    backdrop.classList.add('show');
+    sheet.classList.add('open');
+    document.documentElement.classList.add('sheet-open');
+    document.body.classList.add('sheet-open');
+    haptic(8);
+  }
+  function closeSheet(id) {
+    const sheet = document.getElementById(id), backdrop = document.getElementById('backdrop');
+    if (!sheet) return;
+    sheet.classList.remove('open');
+    sheetStack = sheetStack.filter(s => s !== id);
+    if (sheetStack.length === 0 && backdrop) {
+      backdrop.classList.remove('show');
+      document.documentElement.classList.remove('sheet-open');
+      document.body.classList.remove('sheet-open');
+    }
+  }
   function closeAllSheets() { sheetStack.slice().forEach(id => closeSheet(id)); }
 
   function openUserSheet() {
@@ -650,7 +643,16 @@
     const email = (currentUser && currentUser.email) || 'مستخدم';
     const username = email.split('@')[0];
     const initial = username.charAt(0).toUpperCase();
-    body.innerHTML = '<div class="user-info"><div class="avatar">' + initial + '</div><div class="user-info-name">' + escapeHtml(username) + '</div></div><button class="user-menu-item" id="toggleThemeBtn"><div class="icon">' + (currentTheme === 'dark' ? '☀️' : '🌙') + '</div><div class="label">الشكل: ' + (currentTheme === 'dark' ? 'ليلي' : 'نهاري') + '</div></button><button class="logout-btn" id="logoutBtn"><div class="icon">🚪</div><div class="label">اطلع</div></button>';
+    const myId = getMyMemberId();
+    const myMember = myId ? getMember(myId) : null;
+
+    body.innerHTML =
+      '<div class="user-info"><div class="avatar">' + initial + '</div><div class="user-info-name">' + escapeHtml(username) + '</div></div>' +
+      '<button class="user-menu-item" id="myIdentityBtn"><div class="icon">' + (myMember ? myMember.emoji : '⚡') + '</div><div class="label">' + (myMember ? 'أنا: ' + escapeHtml(myMember.name) : 'حدد نفسك في القائمة') + '</div></button>' +
+      '<button class="user-menu-item" id="toggleThemeBtn"><div class="icon">' + (currentTheme === 'dark' ? '☀️' : '🌙') + '</div><div class="label">الشكل: ' + (currentTheme === 'dark' ? 'ليلي' : 'نهاري') + '</div></button>' +
+      '<button class="logout-btn" id="logoutBtn"><div class="icon">🚪</div><div class="label">اطلع</div></button>';
+
+    body.querySelector('#myIdentityBtn').onclick = function () { pickMyMemberDialog(function () { openUserSheet(); }); };
     body.querySelector('#toggleThemeBtn').onclick = function () { applyTheme(currentTheme === 'dark' ? 'light' : 'dark'); openUserSheet(); haptic(10); };
     body.querySelector('#logoutBtn').onclick = signOutAndRedirect;
     openSheet('sheet-user');
@@ -668,29 +670,28 @@
     const dSave = document.getElementById('debtSave'); if (dSave) dSave.onclick = saveDebt;
     const nameInput = document.getElementById('memberName'); if (nameInput) nameInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') saveMember(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAllSheets(); });
-    console.log('✅ الأزرار مربوطة');
   }
 
   async function init() {
-    console.log('🚀 بدء التطبيق');
     applyTheme('dark');
-    try { initEvents(); } catch (e) { console.error('initEvents:', e); showFatalError('فشل ربط الأزرار'); }
+    try { initEvents(); } catch (e) { showFatalError('فشل ربط الأزرار'); }
     try {
-      if (typeof window.db === 'undefined' || !window.db) { showFatalError('Supabase ما تحمّل. تحقق من الإنترنت وأعد التحميل.'); return; }
+      if (typeof window.db === 'undefined' || !window.db) { showFatalError('Supabase ما تحمّل'); return; }
       const sessionRes = await window.db.auth.getSession();
       const session = sessionRes && sessionRes.data && sessionRes.data.session;
-      if (!session || !session.user) { console.warn('⚠️ ما فيه جلسة — تحويل لـ index'); window.location.replace('index.html'); return; }
+      if (!session || !session.user) { window.location.replace('index.html'); return; }
       currentUser = session.user;
-      console.log('✅ الجلسة:', currentUser.email);
       const initial = (currentUser.email || '?').charAt(0).toUpperCase();
       const avatarEl = document.getElementById('userAvatar');
       if (avatarEl) avatarEl.textContent = initial;
       await loadAllData();
+      if (!getMyMemberId()) {
+        var me = findMeAsMember();
+        if (me) setMyMemberId(me.id);
+      }
       switchTab('members');
-      console.log('✅ التطبيق جاهز');
     } catch (err) {
-      console.error('❌ init فشلت:', err);
-      showFatalError('فشل التحميل: ' + (err && err.message ? err.message : 'خطأ غير متوقع'));
+      showFatalError('فشل التحميل: ' + (err && err.message ? err.message : 'خطأ'));
     }
   }
 
